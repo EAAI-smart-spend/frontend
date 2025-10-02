@@ -1,50 +1,243 @@
-# Welcome to your Expo app 👋
+# SmartSpend - Expense Tracking App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A beautiful iOS-style expense tracking application built with Expo, React Native, React Native Paper, and Redux Toolkit.
 
-## Get started
+## � Features
 
-1. Install dependencies
+- **Onboarding Flow**: Welcome screen with smooth introduction
+- **Expense Management**: Add, view, edit, and delete expenses with swipe gestures
+- **Dashboard Analytics**: Visualize spending with pie charts and bar graphs
+- **Category Tracking**: Organize expenses by customizable categories
+- **Smart Summaries**: View today's and weekly spending at a glance
+- **Settings & Export**: Manage preferences and export data
+- **iOS-Style UI**: Clean, native-feeling interface using React Native Paper
 
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or later)
+- npm or yarn
+- Expo CLI (`npm install -g expo-cli`)
+- iOS Simulator (Xcode) or Android Emulator
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd smart-spend-frontend
+   ```
+
+2. **Install dependencies**
    ```bash
    npm install
+   # or
+   yarn install
    ```
 
-2. Start the app
-
+3. **Start the development server**
    ```bash
-   npx expo start
+   npm start
+   # or
+   yarn start
+   # or
+   expo start
    ```
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### Running on iOS
 
 ```bash
-npm run reset-project
+npm run ios
+# or
+yarn ios
+# or press 'i' in the Expo terminal
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Running on Android
 
-## Learn more
+```bash
+npm run android
+# or
+yarn android
+# or press 'a' in the Expo terminal
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### Running on Web
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npm run web
+# or
+yarn web
+```
 
-## Join the community
+## 📁 Project Structure
 
-Join our community of developers creating universal apps.
+```
+smart-spend-frontend/
+├── app/                      # Expo Router files (legacy)
+├── assets/                   # Images, icons, and static resources
+├── components/               # Reusable UI components
+│   ├── ChartView.tsx        # Chart rendering component
+│   ├── ExpenseCard.tsx      # Individual expense display card
+│   ├── FormInput.tsx        # Styled form input component
+│   ├── SummaryCard.tsx      # Summary statistics card
+│   └── ui/                  # Base UI components
+├── constants/                # App-wide constants
+│   └── theme.tsx            # React Native Paper theme config
+├── hooks/                    # Custom React hooks
+├── navigation/               # Navigation configuration
+│   ├── RootNavigator.tsx    # Main stack navigator
+│   ├── TabNavigator.tsx     # Bottom tab navigator
+│   ├── types.ts             # Navigation type definitions
+│   └── index.ts             # Navigation exports
+├── screens/                  # App screens/pages
+│   ├── OnboardingScreen.tsx # Welcome/intro screen
+│   ├── HomeScreen.tsx       # Main dashboard with summaries
+│   ├── ExpensesScreen.tsx   # Full expense list
+│   ├── AddExpenseScreen.tsx # Add/edit expense form
+│   ├── DashboardScreen.tsx  # Analytics and charts
+│   ├── SettingsScreen.tsx   # App settings
+│   └── index.ts             # Screen exports
+├── store/                    # Redux state management
+│   ├── store.ts             # Redux store configuration
+│   ├── expensesSlice.ts     # Expenses state slice
+│   └── hooks.ts             # Typed Redux hooks
+├── utils/                    # Utility functions
+│   ├── formatCurrency.ts    # Currency formatting
+│   ├── formatDate.ts        # Date formatting
+│   ├── validation.ts        # Form validation
+│   └── index.ts             # Utility exports
+├── App.tsx                   # Main app entry point
+├── app.json                  # Expo configuration
+├── package.json              # Dependencies and scripts
+└── tsconfig.json             # TypeScript configuration
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 🎨 Key Technologies
+
+- **Expo**: Development framework for React Native
+- **React Native**: Cross-platform mobile framework
+- **React Native Paper**: Material Design components with iOS styling
+- **Redux Toolkit**: State management
+- **React Navigation**: Navigation library (Stack + Bottom Tabs)
+- **React Native Chart Kit**: Data visualization
+- **TypeScript**: Type safety
+- **Expo Vector Icons**: Icon library
+
+## 🧭 Navigation Flow
+
+```
+App Launch
+    ↓
+Onboarding Screen (first time)
+    ↓
+Main App (Bottom Tabs)
+    ├─ Home (Overview + Quick Add)
+    ├─ Expenses (Full List + Swipe to Delete)
+    ├─ Add Expense (Form)
+    ├─ Dashboard (Charts & Analytics)
+    └─ Settings (Preferences & Export)
+```
+
+## 💾 State Management
+
+The app uses Redux Toolkit for state management with the following structure:
+
+- **Expenses Slice**: Manages all expense-related state
+  - `expenses`: Array of all expenses
+  - `categories`: Available expense categories
+  - Actions: `addExpense`, `updateExpense`, `deleteExpense`
+
+## 🎯 Key Features Breakdown
+
+### Home Screen
+- Summary cards showing today's and weekly spending
+- Quick access to add expenses via FAB
+- Recent transactions preview
+
+### Expenses Screen
+- Full list of all expenses
+- Swipe-to-delete functionality
+- Category filtering
+- Sort by date or amount
+
+### Add Expense Screen
+- Name/description input
+- Amount input (with currency formatting)
+- Category selection dropdown
+- Date picker
+- Form validation
+
+### Dashboard Screen
+- Pie chart: Spending by category
+- Bar chart: Weekly spending trends
+- Total spending summaries
+- Category breakdowns
+
+### Settings Screen
+- Currency selection
+- Category management
+- Dark mode toggle (future)
+- Export data (CSV/JSON)
+- App information
+
+## 🎨 iOS-Style Design
+
+The app uses React Native Paper with custom iOS-style theming:
+
+- **Colors**: iOS system colors (blue, red, green, etc.)
+- **Typography**: System font family
+- **Components**: Rounded corners, subtle shadows
+- **Interactions**: Native-feeling animations and gestures
+- **Layout**: SafeAreaView for notch/home indicator spacing
+
+## 📝 Available Scripts
+
+```bash
+npm start          # Start Expo development server
+npm run ios        # Run on iOS simulator
+npm run android    # Run on Android emulator
+npm run web        # Run in web browser
+npm test           # Run tests (if configured)
+```
+
+## 🐛 Troubleshooting
+
+### iOS Simulator Issues
+- Make sure Xcode is installed and up to date
+- Run `expo doctor` to check for issues
+- Try clearing cache: `expo start -c`
+
+### Module Resolution Errors
+- Delete `node_modules` and reinstall: `rm -rf node_modules && npm install`
+- Clear Metro bundler cache: `expo start -c`
+
+### Redux DevTools
+- Install Redux DevTools Extension in your browser
+- Enable it in development for state debugging
+
+## 🔮 Future Enhancements
+
+- [ ] Recurring expenses
+- [ ] Budget limits and alerts
+- [ ] Multi-currency support
+- [ ] Cloud sync (Firebase/Supabase)
+- [ ] Biometric authentication
+- [ ] Receipt photo attachments
+- [ ] Advanced filtering and search
+- [ ] Export to PDF reports
+- [ ] Dark mode
+- [ ] Widgets (iOS/Android)
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👨‍💻 Development
+
+Built with ❤️ using Expo and React Native
+
+---
+
+For more information, visit the [Expo Documentation](https://docs.expo.dev/) or [React Native Paper Documentation](https://callstack.github.io/react-native-paper/).
