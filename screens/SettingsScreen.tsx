@@ -1,30 +1,24 @@
 import Constants from "expo-constants";
 import React, { useState } from "react";
 import { Alert, ScrollView, Share, StyleSheet } from "react-native";
-import {
-  Button,
-  Divider,
-  IconButton,
-  List,
-  Menu,
-  Text,
-} from "react-native-paper";
+import { Divider, List, Menu, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  addCategory,
-  removeCategory,
-  setCurrency,
-} from "../store/expensesSlice";
+import { setCurrency } from "../store/expensesSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getAvailableCurrencies } from "../utils";
 
-export const SettingsScreen: React.FC = () => {
+type SettingsScreenProps = {
+  navigation: any;
+};
+
+export const SettingsScreen: React.FC<SettingsScreenProps> = ({
+  navigation,
+}) => {
   const dispatch = useAppDispatch();
   const { currency, categories, expenses } = useAppSelector(
     (state) => state.expenses
   );
   const [currencyMenuVisible, setCurrencyMenuVisible] = useState(false);
-  const [showCategories, setShowCategories] = useState(false);
 
   const availableCurrencies = getAvailableCurrencies();
 
@@ -32,68 +26,6 @@ export const SettingsScreen: React.FC = () => {
     dispatch(setCurrency(newCurrency));
     setCurrencyMenuVisible(false);
     Alert.alert("Success", `Currency changed to ${newCurrency}`);
-  };
-
-  const handleAddCategory = () => {
-    Alert.prompt(
-      "Add Category",
-      "Enter a name for the new category",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Add",
-          onPress: (text?: string) => {
-            if (text && text.trim().length > 0) {
-              if (categories.includes(text.trim())) {
-                Alert.alert("Error", "Category already exists");
-              } else {
-                dispatch(addCategory(text.trim()));
-                Alert.alert("Success", "Category added successfully");
-              }
-            }
-          },
-        },
-      ],
-      "plain-text"
-    );
-  };
-
-  const handleRemoveCategory = (category: string) => {
-    const expensesInCategory = expenses.filter(
-      (e) => e.category === category
-    ).length;
-
-    if (expensesInCategory > 0) {
-      Alert.alert(
-        "Cannot Delete",
-        `This category has ${expensesInCategory} expense${
-          expensesInCategory !== 1 ? "s" : ""
-        }. Please remove or recategorize them first.`
-      );
-      return;
-    }
-
-    Alert.alert(
-      "Remove Category",
-      `Are you sure you want to remove "${category}"?`,
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Remove",
-          style: "destructive",
-          onPress: () => {
-            dispatch(removeCategory(category));
-            Alert.alert("Success", "Category removed successfully");
-          },
-        },
-      ]
-    );
   };
 
   const handleExportJSON = async () => {
@@ -202,38 +134,15 @@ export const SettingsScreen: React.FC = () => {
         <List.Section>
           <List.Subheader style={styles.subheader}>Categories</List.Subheader>
 
-          <List.Accordion
+          <List.Item
             title="Manage Categories"
             description={`${categories.length} categories`}
             left={(props) => <List.Icon {...props} icon="tag-multiple" />}
-            expanded={showCategories}
-            onPress={() => setShowCategories(!showCategories)}
+            right={(props) => <List.Icon {...props} icon="chevron-right" />}
+            onPress={() => navigation.navigate("ManageCategories")}
             style={styles.listItem}
-          >
-            {categories.map((category) => (
-              <List.Item
-                key={category}
-                title={category}
-                right={() => (
-                  <IconButton
-                    icon="close"
-                    iconColor="#FF3B30"
-                    onPress={() => handleRemoveCategory(category)}
-                  />
-                )}
-                style={styles.categoryItem}
-              />
-            ))}
-          </List.Accordion>
+          />
         </List.Section>
-
-        <Button
-          mode="outlined"
-          onPress={handleAddCategory}
-          style={styles.addCategoryButton}
-        >
-          Add Category
-        </Button>
 
         <Divider />
 
@@ -307,20 +216,11 @@ const styles = StyleSheet.create({
   listItem: {
     backgroundColor: "#FFFFFF",
   },
-  categoryItem: {
-    backgroundColor: "#FFFFFF",
-    paddingLeft: 32,
-  },
   menuContent: {
     backgroundColor: "#FFFFFF",
   },
   selectedMenuItem: {
     color: "#007AFF",
     fontWeight: "600",
-  },
-  addCategoryButton: {
-    marginVertical: 16,
-    marginHorizontal: 16,
-    borderColor: "#007AFF",
   },
 });

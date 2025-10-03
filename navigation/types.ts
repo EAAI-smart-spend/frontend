@@ -5,6 +5,7 @@ import type { Expense } from "../store/expensesSlice";
 export type RootStackParamList = {
   Onboarding: undefined;
   Main: undefined;
+  ManageCategories: undefined;
 };
 
 export type MainTabParamList = {
