@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
-import { Card, Text } from 'react-native-paper';
-import { PieChart, BarChart } from 'react-native-chart-kit';
+import React from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
+import { BarChart, PieChart } from "react-native-chart-kit";
+import { Card, Text } from "react-native-paper";
 
-const screenWidth = Dimensions.get('window').width;
+const screenWidth = Dimensions.get("window").width;
 
 interface ChartData {
   name: string;
@@ -16,7 +16,7 @@ interface ChartData {
 interface ChartViewProps {
   title: string;
   data: ChartData[];
-  type: 'pie' | 'bar';
+  type: "pie" | "bar";
   currency?: string;
 }
 
@@ -24,12 +24,12 @@ export const ChartView: React.FC<ChartViewProps> = ({
   title,
   data,
   type,
-  currency = '$',
+  currency = "$",
 }) => {
   const chartConfig = {
-    backgroundColor: '#FFFFFF',
-    backgroundGradientFrom: '#FFFFFF',
-    backgroundGradientTo: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
+    backgroundGradientFrom: "#FFFFFF",
+    backgroundGradientTo: "#FFFFFF",
     decimalPlaces: 0,
     color: (opacity = 1) => `rgba(0, 122, 255, ${opacity})`,
     labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
@@ -38,7 +38,7 @@ export const ChartView: React.FC<ChartViewProps> = ({
     },
     propsForLabels: {
       fontSize: 12,
-      fontWeight: '600',
+      fontWeight: "600",
     },
   };
 
@@ -46,7 +46,7 @@ export const ChartView: React.FC<ChartViewProps> = ({
     name: item.name,
     population: item.value,
     color: item.color,
-    legendFontColor: item.legendFontColor || '#7F7F7F',
+    legendFontColor: item.legendFontColor || "#7F7F7F",
     legendFontSize: item.legendFontSize || 12,
   }));
 
@@ -67,7 +67,7 @@ export const ChartView: React.FC<ChartViewProps> = ({
           {title}
         </Text>
         <View style={styles.chartContainer}>
-          {type === 'pie' ? (
+          {type === "pie" ? (
             <PieChart
               data={pieData}
               width={screenWidth - 64}
@@ -104,17 +104,17 @@ export const ChartView: React.FC<ChartViewProps> = ({
 const styles = StyleSheet.create({
   card: {
     margin: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     elevation: 2,
   },
   title: {
-    fontWeight: '700',
+    fontWeight: "700",
     marginBottom: 16,
-    color: '#000000',
+    color: "#000000",
   },
   chartContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   barChart: {
     borderRadius: 16,

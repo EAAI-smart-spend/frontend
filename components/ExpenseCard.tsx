@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Card, Text, IconButton } from 'react-native-paper';
-import { Expense } from '../store/expensesSlice';
-import { formatDate, formatCurrency } from '../utils';
+import React from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Card, IconButton, Text } from "react-native-paper";
+import { Expense } from "../store/expensesSlice";
+import { formatCurrency, formatDate } from "../utils";
 
 interface ExpenseCardProps {
   expense: Expense;
@@ -19,32 +19,32 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
 }) => {
   const getCategoryIcon = (category: string): string => {
     const iconMap: { [key: string]: string } = {
-      'Food & Dining': 'food',
-      'Transportation': 'car',
-      'Shopping': 'shopping',
-      'Entertainment': 'movie',
-      'Bills & Utilities': 'receipt',
-      'Healthcare': 'medical-bag',
-      'Education': 'school',
-      'Travel': 'airplane',
-      'Other': 'dots-horizontal',
+      "Food & Dining": "food",
+      Transportation: "car",
+      Shopping: "shopping",
+      Entertainment: "movie",
+      "Bills & Utilities": "receipt",
+      Healthcare: "medical-bag",
+      Education: "school",
+      Travel: "airplane",
+      Other: "dots-horizontal",
     };
-    return iconMap[category] || 'cash';
+    return iconMap[category] || "cash";
   };
 
   const getCategoryColor = (category: string): string => {
     const colorMap: { [key: string]: string } = {
-      'Food & Dining': '#FF6B6B',
-      'Transportation': '#4ECDC4',
-      'Shopping': '#45B7D1',
-      'Entertainment': '#FFA07A',
-      'Bills & Utilities': '#98D8C8',
-      'Healthcare': '#F7DC6F',
-      'Education': '#BB8FCE',
-      'Travel': '#85C1E2',
-      'Other': '#95A5A6',
+      "Food & Dining": "#FF6B6B",
+      Transportation: "#4ECDC4",
+      Shopping: "#45B7D1",
+      Entertainment: "#FFA07A",
+      "Bills & Utilities": "#98D8C8",
+      Healthcare: "#F7DC6F",
+      Education: "#BB8FCE",
+      Travel: "#85C1E2",
+      Other: "#95A5A6",
     };
-    return colorMap[category] || '#3498DB';
+    return colorMap[category] || "#3498DB";
   };
 
   return (
@@ -55,7 +55,7 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
             <View
               style={[
                 styles.iconContainer,
-                { backgroundColor: getCategoryColor(expense.category) + '20' },
+                { backgroundColor: getCategoryColor(expense.category) + "20" },
               ]}
             >
               <IconButton
@@ -73,7 +73,11 @@ export const ExpenseCard: React.FC<ExpenseCardProps> = ({
                 {expense.category} • {formatDate(expense.date)}
               </Text>
               {expense.description && (
-                <Text variant="bodySmall" style={styles.description} numberOfLines={1}>
+                <Text
+                  variant="bodySmall"
+                  style={styles.description}
+                  numberOfLines={1}
+                >
                   {expense.description}
                 </Text>
               )}
@@ -103,26 +107,26 @@ const styles = StyleSheet.create({
   card: {
     marginHorizontal: 16,
     marginVertical: 6,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     elevation: 1,
   },
   cardContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 12,
   },
   leftContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     flex: 1,
   },
   iconContainer: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 12,
   },
   icon: {
@@ -132,24 +136,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 2,
   },
   category: {
-    color: '#8E8E93',
+    color: "#8E8E93",
     marginTop: 2,
   },
   description: {
-    color: '#8E8E93',
+    color: "#8E8E93",
     marginTop: 2,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
   rightContent: {
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   amount: {
-    fontWeight: '700',
-    color: '#007AFF',
+    fontWeight: "700",
+    color: "#007AFF",
   },
   deleteButton: {
     margin: 0,

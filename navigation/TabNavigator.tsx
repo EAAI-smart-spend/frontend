@@ -1,8 +1,14 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Icon } from 'react-native-paper';
-import { HomeScreen, ExpensesScreen, AddExpenseScreen, DashboardScreen, SettingsScreen } from '../screens';
-import type { MainTabParamList } from './types';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React from "react";
+import { Icon } from "react-native-paper";
+import {
+  AddExpenseScreen,
+  DashboardScreen,
+  ExpensesScreen,
+  HomeScreen,
+  SettingsScreen,
+} from "../screens";
+import type { MainTabParamList } from "./types";
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -11,19 +17,19 @@ export const TabNavigator: React.FC = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#007AFF',
-        tabBarInactiveTintColor: '#8E8E93',
+        tabBarActiveTintColor: "#007AFF",
+        tabBarInactiveTintColor: "#8E8E93",
         tabBarStyle: {
-          backgroundColor: '#FFFFFF',
+          backgroundColor: "#FFFFFF",
           borderTopWidth: 0.5,
-          borderTopColor: '#C6C6C8',
+          borderTopColor: "#C6C6C8",
           height: 88,
           paddingBottom: 32,
           paddingTop: 8,
         },
         tabBarLabelStyle: {
           fontSize: 10,
-          fontWeight: '500',
+          fontWeight: "500",
         },
       }}
     >
@@ -49,7 +55,7 @@ export const TabNavigator: React.FC = () => {
         name="AddExpense"
         component={AddExpenseScreen}
         options={{
-          tabBarLabel: 'Add',
+          tabBarLabel: "Add",
           tabBarIcon: ({ color, size }) => (
             <Icon source="plus-circle" size={size} color={color} />
           ),

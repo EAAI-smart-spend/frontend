@@ -2,40 +2,40 @@
  * Format a date string or Date object to a readable format
  */
 export const formatDate = (date: string | Date): string => {
-  const d = typeof date === 'string' ? new Date(date) : date;
-  
+  const d = typeof date === "string" ? new Date(date) : date;
+
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
-  
+
   // Check if date is today
   if (d.toDateString() === today.toDateString()) {
-    return 'Today';
+    return "Today";
   }
-  
+
   // Check if date is yesterday
   if (d.toDateString() === yesterday.toDateString()) {
-    return 'Yesterday';
+    return "Yesterday";
   }
-  
+
   // Format as MMM DD, YYYY
-  const options: Intl.DateTimeFormatOptions = { 
-    year: 'numeric', 
-    month: 'short', 
-    day: 'numeric' 
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   };
-  return d.toLocaleDateString('en-US', options);
+  return d.toLocaleDateString("en-US", options);
 };
 
 /**
  * Format date to short format (MM/DD/YYYY)
  */
 export const formatDateShort = (date: string | Date): string => {
-  const d = typeof date === 'string' ? new Date(date) : date;
-  return d.toLocaleDateString('en-US', { 
-    month: '2-digit', 
-    day: '2-digit', 
-    year: 'numeric' 
+  const d = typeof date === "string" ? new Date(date) : date;
+  return d.toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric",
   });
 };
 

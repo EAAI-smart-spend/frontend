@@ -1,6 +1,6 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Card, Text } from 'react-native-paper';
+import React from "react";
+import { StyleSheet } from "react-native";
+import { Card, Text } from "react-native-paper";
 
 interface SummaryCardProps {
   title: string;
@@ -14,7 +14,7 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({
   title,
   amount,
   subtitle,
-  color = '#007AFF',
+  color = "#007AFF",
 }) => {
   return (
     <Card style={styles.card} mode="elevated">
@@ -39,20 +39,20 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     margin: 8,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     elevation: 2,
   },
   title: {
-    color: '#8E8E93',
+    color: "#8E8E93",
     marginBottom: 8,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   amount: {
-    fontWeight: '700',
+    fontWeight: "700",
     marginBottom: 4,
   },
   subtitle: {
-    color: '#8E8E93',
+    color: "#8E8E93",
     fontSize: 12,
   },
 });

@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, Alert } from 'react-native';
-import { Text, FAB, Searchbar } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { deleteExpense } from '../store/expensesSlice';
-import { ExpenseCard } from '../components';
-import type { Expense } from '../store/expensesSlice';
+import React, { useState } from "react";
+import { Alert, FlatList, StyleSheet, View } from "react-native";
+import { FAB, Searchbar, Text } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ExpenseCard } from "../components";
+import type { Expense } from "../store/expensesSlice";
+import { deleteExpense } from "../store/expensesSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 type ExpensesScreenProps = {
   navigation: any;
 };
 
-export const ExpensesScreen: React.FC<ExpensesScreenProps> = ({ navigation }) => {
+export const ExpensesScreen: React.FC<ExpensesScreenProps> = ({
+  navigation,
+}) => {
   const dispatch = useAppDispatch();
   const { expenses, currency } = useAppSelector((state) => state.expenses);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredExpenses = expenses.filter((expense) => {
     const searchLower = searchQuery.toLowerCase();
@@ -27,16 +29,16 @@ export const ExpensesScreen: React.FC<ExpensesScreenProps> = ({ navigation }) =>
 
   const handleDeleteExpense = (expense: Expense) => {
     Alert.alert(
-      'Delete Expense',
+      "Delete Expense",
       `Are you sure you want to delete "${expense.name}"?`,
       [
         {
-          text: 'Cancel',
-          style: 'cancel',
+          text: "Cancel",
+          style: "cancel",
         },
         {
-          text: 'Delete',
-          style: 'destructive',
+          text: "Delete",
+          style: "destructive",
           onPress: () => dispatch(deleteExpense(expense.id)),
         },
       ]
@@ -47,13 +49,13 @@ export const ExpensesScreen: React.FC<ExpensesScreenProps> = ({ navigation }) =>
     <ExpenseCard
       expense={item}
       currency={currency}
-      onPress={() => navigation.navigate('AddExpense', { expense: item })}
+      onPress={() => navigation.navigate("AddExpense", { expense: item })}
       onDelete={() => handleDeleteExpense(item)}
     />
   );
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={styles.container} edges={["top"]}>
       <Text variant="displaySmall" style={styles.pageTitle}>
         Expenses
       </Text>
@@ -65,22 +67,20 @@ export const ExpensesScreen: React.FC<ExpensesScreenProps> = ({ navigation }) =>
           value={searchQuery}
           style={styles.searchbar}
           iconColor="#007AFF"
-          theme={{ colors: { primary: '#007AFF' } }}
+          theme={{ colors: { primary: "#007AFF" } }}
         />
       </View>
 
       {filteredExpenses.length === 0 ? (
         <View style={styles.emptyState}>
-          <Text style={styles.emptyIcon}>
-            {searchQuery ? '🔍' : '📝'}
-          </Text>
+          <Text style={styles.emptyIcon}>{searchQuery ? "🔍" : "📝"}</Text>
           <Text variant="titleMedium" style={styles.emptyTitle}>
-            {searchQuery ? 'No expenses found' : 'No expenses yet'}
+            {searchQuery ? "No expenses found" : "No expenses yet"}
           </Text>
           <Text variant="bodyMedium" style={styles.emptySubtitle}>
             {searchQuery
-              ? 'Try a different search term'
-              : 'Tap the + button to add your first expense'}
+              ? "Try a different search term"
+              : "Tap the + button to add your first expense"}
           </Text>
         </View>
       ) : (
@@ -96,7 +96,7 @@ export const ExpensesScreen: React.FC<ExpensesScreenProps> = ({ navigation }) =>
       <FAB
         icon="plus"
         style={styles.fab}
-        onPress={() => navigation.navigate('AddExpense')}
+        onPress={() => navigation.navigate("AddExpense")}
         color="#FFFFFF"
       />
     </SafeAreaView>
@@ -106,23 +106,23 @@ export const ExpensesScreen: React.FC<ExpensesScreenProps> = ({ navigation }) =>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: "#F2F2F7",
   },
   pageTitle: {
     fontSize: 34,
-    fontWeight: '700',
+    fontWeight: "700",
     marginHorizontal: 16,
     marginTop: 8,
     marginBottom: 8,
-    color: '#000000',
+    color: "#000000",
   },
   searchContainer: {
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   searchbar: {
-    backgroundColor: '#F2F2F7',
+    backgroundColor: "#F2F2F7",
     elevation: 0,
   },
   listContent: {
@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: 40,
   },
   emptyIcon: {
@@ -140,18 +140,18 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   emptyTitle: {
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 8,
-    color: '#000000',
+    color: "#000000",
   },
   emptySubtitle: {
-    textAlign: 'center',
-    color: '#8E8E93',
+    textAlign: "center",
+    color: "#8E8E93",
   },
   fab: {
-    position: 'absolute',
+    position: "absolute",
     right: 16,
     bottom: 16,
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
   },
 });

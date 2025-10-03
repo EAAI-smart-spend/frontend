@@ -1,28 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Platform, Alert } from 'react-native';
-import { Button, Menu, TextInput as PaperInput, Text } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { addExpense, updateExpense } from '../store/expensesSlice';
-import { FormInput } from '../components';
-import { validateExpenseName, validateAmount, validateCategory, validateDate } from '../utils';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import React, { useEffect, useState } from "react";
+import { Alert, Platform, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Button,
+  Menu,
+  TextInput as PaperInput,
+  Text,
+} from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { FormInput } from "../components";
+import { addExpense, updateExpense } from "../store/expensesSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import {
+  validateAmount,
+  validateCategory,
+  validateDate,
+  validateExpenseName,
+} from "../utils";
 
 type AddExpenseScreenProps = {
   navigation: any;
   route: any;
 };
 
-export const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ navigation, route }) => {
+export const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({
+  navigation,
+  route,
+}) => {
   const dispatch = useAppDispatch();
   const { categories, currency } = useAppSelector((state) => state.expenses);
   const existingExpense = route.params?.expense;
 
-  const [name, setName] = useState(existingExpense?.name || '');
-  const [amount, setAmount] = useState(existingExpense?.amount.toString() || '');
-  const [category, setCategory] = useState(existingExpense?.category || '');
-  const [date, setDate] = useState(existingExpense ? new Date(existingExpense.date) : new Date());
-  const [description, setDescription] = useState(existingExpense?.description || '');
+  const [name, setName] = useState(existingExpense?.name || "");
+  const [amount, setAmount] = useState(
+    existingExpense?.amount.toString() || ""
+  );
+  const [category, setCategory] = useState(existingExpense?.category || "");
+  const [date, setDate] = useState(
+    existingExpense ? new Date(existingExpense.date) : new Date()
+  );
+  const [description, setDescription] = useState(
+    existingExpense?.description || ""
+  );
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
 
@@ -35,7 +54,7 @@ export const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ navigation, 
 
   useEffect(() => {
     navigation.setOptions({
-      title: existingExpense ? 'Edit Expense' : 'Add Expense',
+      title: existingExpense ? "Edit Expense" : "Add Expense",
     });
   }, [existingExpense, navigation]);
 
@@ -66,29 +85,32 @@ export const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ navigation, 
 
     if (existingExpense) {
       dispatch(updateExpense({ ...expenseData, id: existingExpense.id }));
-      Alert.alert('Success', 'Expense updated successfully');
+      Alert.alert("Success", "Expense updated successfully");
     } else {
       dispatch(addExpense(expenseData));
-      Alert.alert('Success', 'Expense added successfully');
+      Alert.alert("Success", "Expense added successfully");
     }
 
     navigation.goBack();
   };
 
   const handleDateChange = (event: any, selectedDate?: Date) => {
-    setShowDatePicker(Platform.OS === 'ios');
+    setShowDatePicker(Platform.OS === "ios");
     if (selectedDate) {
       setDate(selectedDate);
     }
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={styles.container} edges={["top"]}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <Text variant="displaySmall" style={styles.pageTitle}>
           Add Expense
         </Text>
-        
+
         <View style={styles.form}>
           <FormInput
             label="Expense Name *"
@@ -106,7 +128,9 @@ export const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ navigation, 
             error={errors.amount}
             placeholder="0.00"
             keyboardType="numeric"
-            left={<PaperInput.Affix text={currency === 'USD' ? '$' : currency} />}
+            left={
+              <PaperInput.Affix text={currency === "USD" ? "$" : currency} />
+            }
           />
 
           <View style={styles.menuContainer}>
@@ -126,8 +150,8 @@ export const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ navigation, 
                   outlineStyle={styles.outline}
                   theme={{
                     colors: {
-                      primary: '#007AFF',
-                      error: '#FF3B30',
+                      primary: "#007AFF",
+                      error: "#FF3B30",
                     },
                     roundness: 12,
                   }}
@@ -143,7 +167,9 @@ export const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ navigation, 
                     setMenuVisible(false);
                   }}
                   title={cat}
-                  titleStyle={category === cat ? styles.selectedMenuItem : undefined}
+                  titleStyle={
+                    category === cat ? styles.selectedMenuItem : undefined
+                  }
                 />
               ))}
             </Menu>
@@ -162,8 +188,8 @@ export const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ navigation, 
               outlineStyle={styles.outline}
               theme={{
                 colors: {
-                  primary: '#007AFF',
-                  error: '#FF3B30',
+                  primary: "#007AFF",
+                  error: "#FF3B30",
                 },
                 roundness: 12,
               }}
@@ -174,7 +200,7 @@ export const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ navigation, 
             <DateTimePicker
               value={date}
               mode="date"
-              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+              display={Platform.OS === "ios" ? "spinner" : "default"}
               onChange={handleDateChange}
               maximumDate={new Date()}
             />
@@ -197,7 +223,7 @@ export const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ navigation, 
             contentStyle={styles.saveButtonContent}
             labelStyle={styles.saveButtonLabel}
           >
-            {existingExpense ? 'Update Expense' : 'Save Expense'}
+            {existingExpense ? "Update Expense" : "Save Expense"}
           </Button>
         </View>
       </ScrollView>
@@ -208,15 +234,15 @@ export const AddExpenseScreen: React.FC<AddExpenseScreenProps> = ({ navigation, 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: "#F2F2F7",
   },
   pageTitle: {
     fontSize: 34,
-    fontWeight: '700',
+    fontWeight: "700",
     marginHorizontal: 16,
     marginTop: 8,
     marginBottom: 16,
-    color: '#000000',
+    color: "#000000",
   },
   scrollView: {
     flex: 1,
@@ -228,17 +254,17 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   menuContent: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   selectedMenuItem: {
-    color: '#007AFF',
-    fontWeight: '600',
+    color: "#007AFF",
+    fontWeight: "600",
   },
   dateContainer: {
     marginBottom: 16,
   },
   input: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     fontSize: 16,
   },
   outline: {
@@ -248,14 +274,14 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 16,
     borderRadius: 12,
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
   },
   saveButtonContent: {
     height: 56,
   },
   saveButtonLabel: {
     fontSize: 17,
-    fontWeight: '600',
-    textTransform: 'none',
+    fontWeight: "600",
+    textTransform: "none",
   },
 });

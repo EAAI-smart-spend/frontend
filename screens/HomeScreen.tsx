@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Text, FAB } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAppSelector } from '../store/hooks';
-import { SummaryCard, ExpenseCard } from '../components';
-import { formatCurrency, getStartOfDay, getStartOfWeek } from '../utils';
+import React, { useMemo } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { FAB, Text } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ExpenseCard, SummaryCard } from "../components";
+import { useAppSelector } from "../store/hooks";
+import { formatCurrency, getStartOfDay, getStartOfWeek } from "../utils";
 
 type HomeScreenProps = {
   navigation: any;
@@ -40,8 +40,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const recentExpenses = expenses.slice(0, 5);
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={styles.container} edges={["top"]}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <Text variant="displaySmall" style={styles.pageTitle}>
           SmartSpend
         </Text>
@@ -53,13 +56,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             <SummaryCard
               title="Today"
               amount={formatCurrency(todayTotal, currency)}
-              subtitle={`${todayExpenses.length} expense${todayExpenses.length !== 1 ? 's' : ''}`}
+              subtitle={`${todayExpenses.length} expense${
+                todayExpenses.length !== 1 ? "s" : ""
+              }`}
               color="#007AFF"
             />
             <SummaryCard
               title="This Week"
               amount={formatCurrency(weekTotal, currency)}
-              subtitle={`${weekExpenses.length} expense${weekExpenses.length !== 1 ? 's' : ''}`}
+              subtitle={`${weekExpenses.length} expense${
+                weekExpenses.length !== 1 ? "s" : ""
+              }`}
               color="#34C759"
             />
           </View>
@@ -74,7 +81,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               <Text
                 variant="bodyMedium"
                 style={styles.viewAll}
-                onPress={() => navigation.navigate('Expenses')}
+                onPress={() => navigation.navigate("Expenses")}
               >
                 View All
               </Text>
@@ -97,7 +104,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                 key={expense.id}
                 expense={expense}
                 currency={currency}
-                onPress={() => navigation.navigate('AddExpense', { expense })}
+                onPress={() => navigation.navigate("AddExpense", { expense })}
               />
             ))
           )}
@@ -107,7 +114,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       <FAB
         icon="plus"
         style={styles.fab}
-        onPress={() => navigation.navigate('AddExpense')}
+        onPress={() => navigation.navigate("AddExpense")}
         color="#FFFFFF"
       />
     </SafeAreaView>
@@ -117,15 +124,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: "#F2F2F7",
   },
   pageTitle: {
     fontSize: 34,
-    fontWeight: '700',
+    fontWeight: "700",
     marginHorizontal: 16,
     marginTop: 8,
     marginBottom: 16,
-    color: '#000000',
+    color: "#000000",
   },
   scrollView: {
     flex: 1,
@@ -134,13 +141,13 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   sectionTitle: {
-    fontWeight: '700',
+    fontWeight: "700",
     marginHorizontal: 16,
     marginBottom: 12,
-    color: '#000000',
+    color: "#000000",
   },
   summaryCards: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingHorizontal: 8,
   },
   recentSection: {
@@ -148,19 +155,19 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   recentHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginHorizontal: 16,
     marginBottom: 12,
   },
   viewAll: {
-    color: '#007AFF',
-    fontWeight: '600',
+    color: "#007AFF",
+    fontWeight: "600",
   },
   emptyState: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 60,
     paddingHorizontal: 40,
   },
@@ -169,18 +176,18 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   emptyTitle: {
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 8,
-    color: '#000000',
+    color: "#000000",
   },
   emptySubtitle: {
-    textAlign: 'center',
-    color: '#8E8E93',
+    textAlign: "center",
+    color: "#8E8E93",
   },
   fab: {
-    position: 'absolute',
+    position: "absolute",
     right: 16,
     bottom: 16,
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
   },
 });

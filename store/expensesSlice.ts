@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Expense {
   id: string;
@@ -16,28 +16,28 @@ export interface ExpensesState {
 }
 
 const defaultCategories = [
-  'Food & Dining',
-  'Transportation',
-  'Shopping',
-  'Entertainment',
-  'Bills & Utilities',
-  'Healthcare',
-  'Education',
-  'Travel',
-  'Other',
+  "Food & Dining",
+  "Transportation",
+  "Shopping",
+  "Entertainment",
+  "Bills & Utilities",
+  "Healthcare",
+  "Education",
+  "Travel",
+  "Other",
 ];
 
 const initialState: ExpensesState = {
   expenses: [],
   categories: defaultCategories,
-  currency: 'USD',
+  currency: "USD",
 };
 
 const expensesSlice = createSlice({
-  name: 'expenses',
+  name: "expenses",
   initialState,
   reducers: {
-    addExpense: (state, action: PayloadAction<Omit<Expense, 'id'>>) => {
+    addExpense: (state, action: PayloadAction<Omit<Expense, "id">>) => {
       const newExpense: Expense = {
         ...action.payload,
         id: Date.now().toString() + Math.random().toString(36).substr(2, 9),

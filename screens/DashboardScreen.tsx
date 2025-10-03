@@ -1,22 +1,31 @@
-import React, { useMemo } from 'react';
-import { StyleSheet, ScrollView, View } from 'react-native';
-import { Text, SegmentedButtons } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useAppSelector } from '../store/hooks';
-import { ChartView, SummaryCard } from '../components';
-import { formatCurrency, getStartOfWeek, getStartOfMonth, getCurrencySymbol } from '../utils';
+import React, { useMemo } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { SegmentedButtons, Text } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ChartView, SummaryCard } from "../components";
+import { useAppSelector } from "../store/hooks";
+import {
+  formatCurrency,
+  getCurrencySymbol,
+  getStartOfMonth,
+  getStartOfWeek,
+} from "../utils";
 
 export const DashboardScreen: React.FC = () => {
   const { expenses, currency } = useAppSelector((state) => state.expenses);
-  const [period, setPeriod] = React.useState('week');
+  const [period, setPeriod] = React.useState("week");
 
   const filteredExpenses = useMemo(() => {
-    if (period === 'week') {
+    if (period === "week") {
       const startOfWeek = getStartOfWeek();
-      return expenses.filter((expense) => new Date(expense.date) >= startOfWeek);
-    } else if (period === 'month') {
+      return expenses.filter(
+        (expense) => new Date(expense.date) >= startOfWeek
+      );
+    } else if (period === "month") {
       const startOfMonth = getStartOfMonth();
-      return expenses.filter((expense) => new Date(expense.date) >= startOfMonth);
+      return expenses.filter(
+        (expense) => new Date(expense.date) >= startOfMonth
+      );
     }
     return expenses;
   }, [expenses, period]);
@@ -27,7 +36,7 @@ export const DashboardScreen: React.FC = () => {
 
   const categoryData = useMemo(() => {
     const categoryTotals: { [key: string]: number } = {};
-    
+
     filteredExpenses.forEach((expense) => {
       if (categoryTotals[expense.category]) {
         categoryTotals[expense.category] += expense.amount;
@@ -37,15 +46,15 @@ export const DashboardScreen: React.FC = () => {
     });
 
     const colors = [
-      '#FF6B6B',
-      '#4ECDC4',
-      '#45B7D1',
-      '#FFA07A',
-      '#98D8C8',
-      '#F7DC6F',
-      '#BB8FCE',
-      '#85C1E2',
-      '#95A5A6',
+      "#FF6B6B",
+      "#4ECDC4",
+      "#45B7D1",
+      "#FFA07A",
+      "#98D8C8",
+      "#F7DC6F",
+      "#BB8FCE",
+      "#85C1E2",
+      "#95A5A6",
     ];
 
     return Object.entries(categoryTotals)
@@ -58,7 +67,9 @@ export const DashboardScreen: React.FC = () => {
   }, [filteredExpenses]);
 
   const averageExpense = useMemo(() => {
-    return filteredExpenses.length > 0 ? totalExpenses / filteredExpenses.length : 0;
+    return filteredExpenses.length > 0
+      ? totalExpenses / filteredExpenses.length
+      : 0;
   }, [filteredExpenses, totalExpenses]);
 
   const highestExpense = useMemo(() => {
@@ -68,23 +79,31 @@ export const DashboardScreen: React.FC = () => {
   }, [filteredExpenses]);
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={styles.container} edges={["top"]}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <Text variant="displaySmall" style={styles.pageTitle}>
           Dashboard
         </Text>
-        
+
         <View style={styles.periodSelector}>
           <SegmentedButtons
             value={period}
             onValueChange={setPeriod}
             buttons={[
-              { value: 'week', label: 'Week' },
-              { value: 'month', label: 'Month' },
-              { value: 'all', label: 'All Time' },
+              { value: "week", label: "Week" },
+              { value: "month", label: "Month" },
+              { value: "all", label: "All Time" },
             ]}
             style={styles.segmentedButtons}
-            theme={{ colors: { secondaryContainer: '#007AFF', onSecondaryContainer: '#FFFFFF' } }}
+            theme={{
+              colors: {
+                secondaryContainer: "#007AFF",
+                onSecondaryContainer: "#FFFFFF",
+              },
+            }}
           />
         </View>
 
@@ -93,7 +112,9 @@ export const DashboardScreen: React.FC = () => {
             <SummaryCard
               title="Total Spent"
               amount={formatCurrency(totalExpenses, currency)}
-              subtitle={`${filteredExpenses.length} expense${filteredExpenses.length !== 1 ? 's' : ''}`}
+              subtitle={`${filteredExpenses.length} expense${
+                filteredExpenses.length !== 1 ? "s" : ""
+              }`}
               color="#FF3B30"
             />
             <SummaryCard
@@ -155,15 +176,15 @@ export const DashboardScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: "#F2F2F7",
   },
   pageTitle: {
     fontSize: 34,
-    fontWeight: '700',
+    fontWeight: "700",
     marginHorizontal: 16,
     marginTop: 8,
     marginBottom: 8,
-    color: '#000000',
+    color: "#000000",
   },
   scrollView: {
     flex: 1,
@@ -171,21 +192,21 @@ const styles = StyleSheet.create({
   periodSelector: {
     paddingHorizontal: 16,
     paddingVertical: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   segmentedButtons: {
-    backgroundColor: '#F2F2F7',
+    backgroundColor: "#F2F2F7",
   },
   summarySection: {
     marginTop: 16,
   },
   summaryCards: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingHorizontal: 8,
   },
   emptyState: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 80,
     paddingHorizontal: 40,
   },
@@ -194,13 +215,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   emptyTitle: {
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 8,
-    color: '#000000',
+    color: "#000000",
   },
   emptySubtitle: {
-    textAlign: 'center',
-    color: '#8E8E93',
+    textAlign: "center",
+    color: "#8E8E93",
   },
   bottomPadding: {
     height: 32,

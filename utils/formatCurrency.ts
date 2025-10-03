@@ -2,18 +2,18 @@
  * Currency symbols mapping
  */
 const currencySymbols: { [key: string]: string } = {
-  USD: '$',
-  EUR: '€',
-  GBP: '£',
-  JPY: '¥',
-  CNY: '¥',
-  INR: '₹',
-  AUD: 'A$',
-  CAD: 'C$',
-  CHF: 'Fr',
-  HKD: 'HK$',
-  SGD: 'S$',
-  TWD: 'NT$',
+  USD: "$",
+  EUR: "€",
+  GBP: "£",
+  JPY: "¥",
+  CNY: "¥",
+  INR: "₹",
+  AUD: "A$",
+  CAD: "C$",
+  CHF: "Fr",
+  HKD: "HK$",
+  SGD: "S$",
+  TWD: "NT$",
 };
 
 /**
@@ -21,17 +21,17 @@ const currencySymbols: { [key: string]: string } = {
  */
 export const formatCurrency = (
   amount: number,
-  currency: string = 'USD',
+  currency: string = "USD",
   showSymbol: boolean = true
 ): string => {
   const symbol = currencySymbols[currency] || currency;
-  
+
   // Format number with commas and 2 decimal places
-  const formatted = amount.toLocaleString('en-US', {
+  const formatted = amount.toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  
+
   return showSymbol ? `${symbol}${formatted}` : formatted;
 };
 
@@ -39,7 +39,7 @@ export const formatCurrency = (
  * Format currency without symbol
  */
 export const formatAmount = (amount: number): string => {
-  return formatCurrency(amount, 'USD', false);
+  return formatCurrency(amount, "USD", false);
 };
 
 /**
@@ -47,7 +47,7 @@ export const formatAmount = (amount: number): string => {
  */
 export const parseCurrency = (value: string): number => {
   // Remove all non-numeric characters except decimal point and minus
-  const cleaned = value.replace(/[^\d.-]/g, '');
+  const cleaned = value.replace(/[^\d.-]/g, "");
   const parsed = parseFloat(cleaned);
   return isNaN(parsed) ? 0 : parsed;
 };
@@ -55,7 +55,7 @@ export const parseCurrency = (value: string): number => {
 /**
  * Get currency symbol
  */
-export const getCurrencySymbol = (currency: string = 'USD'): string => {
+export const getCurrencySymbol = (currency: string = "USD"): string => {
   return currencySymbols[currency] || currency;
 };
 

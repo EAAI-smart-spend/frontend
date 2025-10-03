@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { TextInput, HelperText } from 'react-native-paper';
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { HelperText, TextInput } from "react-native-paper";
 
 interface FormInputProps {
   label: string;
@@ -8,7 +8,7 @@ interface FormInputProps {
   onChangeText: (text: string) => void;
   error?: string | null;
   placeholder?: string;
-  keyboardType?: 'default' | 'numeric' | 'email-address' | 'phone-pad';
+  keyboardType?: "default" | "numeric" | "email-address" | "phone-pad";
   multiline?: boolean;
   numberOfLines?: number;
   left?: React.ReactNode;
@@ -23,7 +23,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   onChangeText,
   error,
   placeholder,
-  keyboardType = 'default',
+  keyboardType = "default",
   multiline = false,
   numberOfLines = 1,
   left,
@@ -51,8 +51,8 @@ export const FormInput: React.FC<FormInputProps> = ({
         outlineStyle={styles.outline}
         theme={{
           colors: {
-            primary: '#007AFF',
-            error: '#FF3B30',
+            primary: "#007AFF",
+            error: "#FF3B30",
           },
           roundness: 12,
         }}
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     fontSize: 16,
   },
   outline: {
