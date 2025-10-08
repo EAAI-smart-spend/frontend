@@ -1,7 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { Alert, Pressable, StyleSheet, Text } from "react-native";
-import { ManageCategoriesScreen, OnboardingScreen } from "../screens";
+import {
+  ManageCategoriesScreen,
+  ManageCurrencyScreen,
+  OnboardingScreen,
+} from "../screens";
 import { addCategory } from "../store/expensesSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { TabNavigator } from "./TabNavigator";
@@ -83,6 +87,15 @@ export const RootNavigator: React.FC = () => {
           headerTitle: "Categories",
           headerBackTitle: "Back",
           headerRight: () => <ManageCategoriesHeader />,
+        }}
+      />
+      <Stack.Screen
+        name="ManageCurrency"
+        component={ManageCurrencyScreen}
+        options={{
+          headerShown: true,
+          headerTitle: "Currency",
+          headerBackTitle: "Back",
         }}
       />
     </Stack.Navigator>

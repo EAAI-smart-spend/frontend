@@ -1,11 +1,9 @@
 import Constants from "expo-constants";
-import React, { useState } from "react";
+import React from "react";
 import { Alert, ScrollView, Share, StyleSheet } from "react-native";
-import { Divider, List, Menu, Text } from "react-native-paper";
+import { Divider, List, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { setCurrency } from "../store/expensesSlice";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { getAvailableCurrencies } from "../utils";
+import { useAppSelector } from "../store/hooks";
 
 type SettingsScreenProps = {
   navigation: any;
@@ -14,19 +12,9 @@ type SettingsScreenProps = {
 export const SettingsScreen: React.FC<SettingsScreenProps> = ({
   navigation,
 }) => {
-  const dispatch = useAppDispatch();
   const { currency, categories, expenses } = useAppSelector(
     (state) => state.expenses
   );
-  const [currencyMenuVisible, setCurrencyMenuVisible] = useState(false);
-
-  const availableCurrencies = getAvailableCurrencies();
-
-  const handleCurrencyChange = (newCurrency: string) => {
-    dispatch(setCurrency(newCurrency));
-    setCurrencyMenuVisible(false);
-    Alert.alert("Success", `Currency changed to ${newCurrency}`);
-  };
 
   const handleExportJSON = async () => {
     try {
@@ -101,32 +89,14 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
         <List.Section>
           <List.Subheader style={styles.subheader}>General</List.Subheader>
 
-          <Menu
-            visible={currencyMenuVisible}
-            onDismiss={() => setCurrencyMenuVisible(false)}
-            anchor={
-              <List.Item
-                title="Currency"
-                description={currency}
-                left={(props) => <List.Icon {...props} icon="currency-usd" />}
-                right={(props) => <List.Icon {...props} icon="chevron-down" />}
-                onPress={() => setCurrencyMenuVisible(true)}
-                style={styles.listItem}
-              />
-            }
-            contentStyle={styles.menuContent}
-          >
-            {availableCurrencies.map((curr) => (
-              <Menu.Item
-                key={curr}
-                onPress={() => handleCurrencyChange(curr)}
-                title={curr}
-                titleStyle={
-                  currency === curr ? styles.selectedMenuItem : undefined
-                }
-              />
-            ))}
-          </Menu>
+          <List.Item
+            title="Currency"
+            description={currency}
+            left={(props) => <List.Icon {...props} icon="currency-usd" />}
+            right={(props) => <List.Icon {...props} icon="chevron-right" />}
+            onPress={() => navigation.navigate("ManageCurrency")}
+            style={styles.listItem}
+          />
         </List.Section>
 
         <Divider />
@@ -215,12 +185,5 @@ const styles = StyleSheet.create({
   },
   listItem: {
     backgroundColor: "#FFFFFF",
-  },
-  menuContent: {
-    backgroundColor: "#FFFFFF",
-  },
-  selectedMenuItem: {
-    color: "#007AFF",
-    fontWeight: "600",
   },
 });

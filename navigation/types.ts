@@ -6,6 +6,7 @@ export type RootStackParamList = {
   Onboarding: undefined;
   Main: undefined;
   ManageCategories: undefined;
+  ManageCurrency: undefined;
 };
 
 export type MainTabParamList = {
