@@ -1,0 +1,49 @@
+.uploadButtonContainer {
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.uploadBtn {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background-color: #007aff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.uploadBtn:hover {
+  background-color: #005edc;
+}
+
+.uploadBtn:disabled {
+  background-color: #a0c4ff;
+  cursor: not-allowed;
+}
+
+.errorText {
+  color: #d32f2f;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.previewContainer {
+  margin-top: 24px;
+}
+
+.previewLabel {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.previewImg {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
