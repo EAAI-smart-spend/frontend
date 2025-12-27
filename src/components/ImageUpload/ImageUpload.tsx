@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import styles from "./ImageUpload.module.css"; // Keep this name or rename file accordingly
 
 interface ImageUploadProps {
-  onUploadSuccess?: (url: string) => void;
+  onUploadSuccess?: (file: File) => void;
   maxSizeMB?: number;
   buttonText?: string;
 }
@@ -21,13 +21,11 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate image type
     if (!file.type.startsWith("image/")) {
       setError("Please select a valid image file.");
       return;
     }
 
-    // Validate size
     if (file.size > maxSizeMB * 1024 * 1024) {
       setError(`File must be smaller than ${maxSizeMB}MB.`);
       return;
@@ -35,14 +33,12 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
 
     setError(null);
 
-    // Generate preview
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreview(reader.result as string);
     };
     reader.readAsDataURL(file);
 
-    // Start upload
     uploadImage(file);
   };
 
@@ -54,27 +50,10 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     formData.append("image", file);
 
     try {
-      // Uncomment and update when you have a real backend
-      /*
-      const response = await fetch("/api/upload-image", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Upload failed");
-      }
-
-      const data = await response.json();
-      const uploadedUrl = data.url; // Adjust based on your API response
-
-      onUploadSuccess?.(uploadedUrl);
-      */
-
-      // For now: simulate success after 1 second (remove later)
+      
       await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log("Image ready for upload:", file.name);
-      onUploadSuccess?.("https://example.com/uploaded-image.jpg"); // Mock URL
+      onUploadSuccess?.(file);
     } catch (err) {
       setError("Upload failed. Please try again.");
       console.error(err);

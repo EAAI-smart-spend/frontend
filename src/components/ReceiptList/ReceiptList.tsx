@@ -1,45 +1,23 @@
 import React from "react";
 import styles from "./ReceiptList.module.css";
 
-// Define receipt type
-interface Receipt {
+export interface Receipt {
   id: string;
-  type: string;          // e.g., "Groceries", "Food & Drinks"
-  amount: string;        // e.g., "$45.80"
-  date: Date;            // Upload or transaction date
+  type: string;        
+  amount: string;        
+  date: Date;            
 }
 
 interface ReceiptListProps {
   receipts?: Receipt[];
-  onDelete?: (id: string) => void; // Callback when delete is clicked
+  onDelete?: (id: string) => void; 
 }
 
+
+
 export const ReceiptList: React.FC<ReceiptListProps> = ({
-  receipts = [
-    // Sample data — remove when using real state
-    {
-      id: "1",
-      type: "Food & Drinks (食物與飲料)",
-      amount: "$45.80",
-      date: new Date("2025-12-15"),
-    },
-    {
-      id: "2",
-      type: "Groceries (雜貨/超市購物)",
-      amount: "$120.50",
-      date: new Date("2025-12-12"),
-    },
-    {
-      id: "3",
-      type: "Transportation (交通)",
-      amount: "$28.00",
-      date: new Date("2025-12-10"),
-    },
-  ],
-  onDelete = (id) => {
-    console.log("Delete receipt:", id);
-    alert(`Deleted receipt ${id}`);
-  },
+  receipts = [],
+  onDelete,
 }) => {
   if (receipts.length === 0) {
     return (
@@ -80,7 +58,7 @@ export const ReceiptList: React.FC<ReceiptListProps> = ({
             <div className={styles.colAction}>
               <button
                 className={styles.deleteBtn}
-                onClick={() => onDelete(receipt.id)}
+                onClick={() => onDelete?.(receipt.id)}
                 aria-label="Delete receipt"
               >
                 <svg
