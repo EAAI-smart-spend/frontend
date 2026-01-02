@@ -7,11 +7,11 @@ import { Receipt, ReceiptList } from "../ReceiptList/ReceiptList";
 import axios from "axios";
 
 const CATEGORY_MAP: Record<string, string> = {
-  "購物": "Groceries (雜貨/超市購物)",
-  "交通": "Transportation (交通)",
-  "其他": "Utilities (公用事業)",    
-  "娛樂": "Entertainment (娛樂)",
-  "食飯": "Food & Drinks (食物與飲料)",
+  "Groceries (雜貨/超市購物)": "Groceries (雜貨/超市購物)",
+  "Transportation (交通)": "Transportation (交通)",
+  "Utilities (公用事業)": "Utilities (公用事業)",    
+  "Entertainment (娛樂)": "Entertainment (娛樂)",
+  "Food & Drinks (食物與飲料)": "Food & Drinks (食物與飲料)",
 };
 
 const CATEGORY_CONFIG = [
@@ -72,7 +72,7 @@ export const DashboardPage: React.FC = () => {
         throw new Error('Invalid response from server');
       }
 
-      const firstModel = Object.keys(data.predictions)[1];
+      const firstModel = Object.keys(data.predictions)[0];
       let predictedShort = data.predictions[firstModel]; // e.g., "食飯" or "購物"
       let predictedCategory = CATEGORY_MAP[predictedShort];
 
